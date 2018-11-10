@@ -1,4 +1,5 @@
 from numpy import matlib as mat
+import time
 
 # For testing - saves time to type in
 FB_DATA = 'graph_data/fb_amherst.edges'
@@ -46,7 +47,7 @@ class ReadEdges():
         for index in range(0, len(self.edgeset_1)):
             print(self.edgeset_1[index] + ' ' + self.edgeset_2[index])
 
-    def get_adjacency(self):
+    def __get_adjacency(self):
         """
         Creates an adjacency matrix from edgesets
         * NOTE no. of unique edges in edgeset_1 might not be 
@@ -64,50 +65,45 @@ class ReadEdges():
             self.adj_mat[index_2, index_1] = 1
         return self.adj_mat
 
-    def get_degree(self):
+    def __get_degree(self):
         """
         Creates a Degree matrix from the adjacency matrix
         If the adjacency matrix has not yet been created,
             this method will create one
+        *NOTE the __get_adjacency method should be called prior
         """
-        try:
-            mat_dim = self.mat_dim
-        except AttributeError:
-            self.get_adjacency()
-            mat_dim = self.mat_dim
         self.deg_mat = mat.zeros((self.mat_dim, self.mat_dim))
-        for i in range(mat_dim):
+        for i in range(self.mat_dim):
             self.deg_mat[i, i] = self.adj_mat[:, i].sum()
         return self.deg_mat
 
-    def get_laplacian(self):
+    def __get_laplacian(self):
         """
         Creates a laplacian matrix from the adjacency and Degree matrix
-        TODO make this more efficent by only computing top right corner
+        *NOTE the __get_degree method should be called priors
         """
-        try:
-            adj_mat = self.adj_mat
-        except AttributeError:
-            adj_mat = self.get_adjacency()
-        try:
-            deg_mat = self.deg_mat
-        except AttributeError:
-            deg_mat = self.get_degree()
         self.lap_mat = mat.zeros((self.mat_dim, self.mat_dim))
         for row in range(self.mat_dim):
             for col in range(row, self.mat_dim):
-                self.lap_mat[row, col] = deg_mat[row, col] - adj_mat[row, col]
-                self.lap_mat[col, row] = deg_mat[row, col] - adj_mat[row, col]
+                self.lap_mat[row, col] = self.deg_mat[row, col] - self.adj_mat[row, col]
+                self.lap_mat[col, row] = self.deg_mat[row, col] - self.adj_mat[row, col]
         return self.lap_mat
+    
+    def generate_matricies(self):
+        """
+        Generates the adjacency, degree, and laplacian matrix in one method for timing
+        """
+        self.__get_adjacency()
+        self.__get_degree()
+        self.__get_laplacian()
 
+        
 def main():
-    x = ReadEdges(TEST_DATA)
-    print(x.get_adjacency())
-    print('-------------------')
-    print(x.get_degree())
-    print('-------------------')
-    print(x.get_laplacian())
-
+    x = ReadEdges(FB_DATA)
+    start = time.time()
+    x.generate_matricies()
+    end = time.time()
+    print(end-start)
 
 if __name__ == "__main__":
     main()
