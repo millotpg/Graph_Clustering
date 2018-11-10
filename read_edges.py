@@ -99,11 +99,12 @@ class ReadEdges():
 
         
 def main():
-    x = ReadEdges(FB_DATA)
+    x = ReadEdges(TEST_DATA)
     start = time.time()
     x.generate_matricies()
     end = time.time()
     print(end-start)
+    print(x.lap_mat)
 
 if __name__ == "__main__":
     main()
