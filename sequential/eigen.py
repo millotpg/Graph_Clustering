@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from queue import PriorityQueue as PQ
 from numpy import linalg
 try:
@@ -27,9 +27,15 @@ class Eigen():
         self.eigen_values, self.eigen_vectors = linalg.eig(input_matrix)
 
     def get_eigenvalues(self):
+        """
+        Getter method for the eigenvalues
+        """
         return self.eigen_values
     
     def get_eigenvectors(self):
+        """
+        Getter method for the eigen vectors
+        """
         return self.eigen_vectors
     
     def get_top_eigenvectors(self, n):
@@ -45,7 +51,7 @@ class Eigen():
         """
         if n > self.mat_size[0]:
             raise ValueError("n cannot be greater than number of eigen values")
-        top_n_vectors = numpy.zeros((self.mat_size[0], n))
+        top_n_vectors = np.zeros((self.mat_size[0], n))
         index_queue = PQ()
         for i in range(self.eigen_values.shape[0]):
             index_queue.put((self.eigen_values[i], i))
@@ -57,12 +63,11 @@ class Eigen():
         return top_n_vectors
 
 def main():
-    pass
-    # test_mat = numpy.array([[6, -1],[2,3]])
-    # eig = Eigen(test_mat)
-    # print(eig.get_eigenvalues())
-    # print(eig.get_eigenvectors())
-    # print(eig.get_top_eigenvectors(1))
+    test_mat = np.array([[6, -1],[2,3]]) # Has eigen values 5 and 4
+    eig = Eigen(test_mat)
+    print(eig.get_eigenvalues())
+    print(eig.get_eigenvectors())
+    print(eig.get_top_eigenvectors(2))
 
 if __name__ == "__main__":
     main()

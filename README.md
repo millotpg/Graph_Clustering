@@ -1,8 +1,13 @@
 # Graph Clustering - A tool for visualizing and clustering graphes
 ## Installation
-After cloning the repository, run: 
+This tool was written for python3. After cloning the repository, run: 
 
 `pip install -r requirements.txt`
+
+Also make sure that tkinter is installed for displaying the plots. This can be done with:
+
+`sudo apt-get install python3-tk`
+
 
 # Structure
 This graph clustering tool contains two packages. A Sequential and Parallel package. Within each package, there is a Runner class (runner.py) that will execute graph clustering with given parameters (edges file, clustering method, min accepted silhouette coefficiet etc.)
