@@ -18,14 +18,18 @@ class GraphPlotter():
     
     def plot_2d(self):
         plt.plot(self.vertex_coords[:, 0], self.vertex_coords[:, 1], 'ro')
+        for i in range(len(self.vertex_ids)):
+            plt.annotate(
+                str(self.vertex_ids[i]),
+                xy = (self.vertex_coords[i, 0], self.vertex_coords[i, 1]),
+            )
         plt.show()
 
 def main():
     test_vertex_ids = [1,2,3,4]
     test_vertex_coords = np.array([[1,1], [2, 1], [1, 2], [2, 2]])
-    
     gp = GraphPlotter(test_vertex_ids, test_vertex_coords, None)
     gp.plot_2d()
-
+66
 if __name__ == "__main__":
     main()
