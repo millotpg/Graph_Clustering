@@ -4,7 +4,7 @@ import time
 # For testing - saves time to type in
 FB_DATA = 'graph_data/fb_amherst.edges'
 ENZYME_DATA = 'graph_data/enzymes_g10.edges'
-TEST_DATA = 'graph_data/test.edges'
+TEST_DATA = 'graph_data/test_2.edges'
 
 class ReadEdges():
     """
@@ -30,6 +30,7 @@ class ReadEdges():
         """
         self.edgeset_1 = []
         self.edgeset_2 = []
+        self.node_ids = []
         with open(filename, 'r') as edge_fl:
             for line in edge_fl:
                 try:
@@ -55,8 +56,8 @@ class ReadEdges():
         * NOTE the total number of unique verticies has to be
             obtained through the union of the two unique edgelists
         """
-        unique_verticies = set.union(set(self.edgeset_1), set(self.edgeset_2))
-        self.mat_dim = len(unique_verticies)
+        self.node_ids = range(1, len(set.union(set(self.edgeset_1), set(self.edgeset_2)))+1)
+        self.mat_dim = len(self.node_ids)
         self.adj_mat = mat.zeros((self.mat_dim, self.mat_dim))
         for edge_index in range(len(self.edgeset_1)):
             index_1 = int(self.edgeset_1[edge_index])-1
@@ -97,8 +98,8 @@ class ReadEdges():
         self.__get_degree()
         self.__get_laplacian()
 
-        
 def main():
+    # Test usage
     x = ReadEdges(TEST_DATA)
     start = time.time()
     x.generate_matricies()

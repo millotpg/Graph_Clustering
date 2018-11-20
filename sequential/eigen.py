@@ -24,7 +24,7 @@ class Eigen():
     def __init__(self, input_matrix):
         self.matrix = input_matrix
         self.mat_size = input_matrix.shape
-        self.eigen_values, self.eigen_vectors = linalg.eig(input_matrix)
+        self.eigen_values, self.eigen_vectors = linalg.eigh(input_matrix)
 
     def get_eigenvalues(self):
         """
@@ -51,15 +51,17 @@ class Eigen():
         """
         if n > self.mat_size[0]:
             raise ValueError("n cannot be greater than number of eigen values")
-        top_n_vectors = np.zeros((self.mat_size[0], n))
+        top_n_vectors = np.matlib.zeros((n, self.mat_size[0]))
         index_queue = PQ()
         for i in range(self.eigen_values.shape[0]):
             index_queue.put((self.eigen_values[i], i))
         index_queue.queue.sort()
-        index_queue.queue.reverse()
+        #index_queue.queue.reverse()
+        index_queue.get()
         for i in range(n):
-            cur_top = index_queue.get()
-            top_n_vectors[:, i] = self.eigen_vectors[:, cur_top[1]]
+            cur_top_value = index_queue.get()
+            cur_top_vector = np.array(self.eigen_vectors[cur_top_value[1], :])
+            top_n_vectors[i, :] = cur_top_vector
         return top_n_vectors
 
 def main():
