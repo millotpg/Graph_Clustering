@@ -5,6 +5,7 @@ import time
 FB_DATA = 'graph_data/fb_amherst.edges'
 ENZYME_DATA = 'graph_data/enzymes_g10.edges'
 TEST_DATA = 'graph_data/test_2.edges'
+LATTICE_DATA = 'graph_data/lattice.edges'
 
 class ReadEdges():
     """

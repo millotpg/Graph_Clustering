@@ -4,6 +4,7 @@ from sequential.runner import RunClustering
 from sequential.read_edges import TEST_DATA
 from sequential.read_edges import ENZYME_DATA
 from sequential.read_edges import FB_DATA
+from sequential.read_edges import LATTICE_DATA
 
 def main():
     runner = RunClustering(TEST_DATA)
