@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+from sequential.runner import RunClustering
+
+# import test data
+FB_DATA = 'graph_data/fb_amherst.edges'
+ENZYME_DATA = 'graph_data/enzymes_g10.edges'
+TEST1_DATA = 'graph_data/test_1.edges'
+TEST2_DATA = 'graph_data/test_2.edges'
+TEST3_DATA = 'graph_data/test_3.edges'
+LATTICE_DATA = 'graph_data/lattice.edges'
+
+def main():
+    runner = RunClustering(FB_DATA)
+    runner.start()
+
+if __name__ == "__main__":
+    main()

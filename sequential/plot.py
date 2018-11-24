@@ -17,12 +17,19 @@ class GraphPlotter():
         self.edges = edges
     
     def plot_2d(self):
-        plt.plot(self.vertex_coords[:, 0], self.vertex_coords[:, 1], 'ro')
+        plt.plot(self.vertex_coords[:, 0], self.vertex_coords[:, 1], 'ro', [])
+        #print('\nGraph points being plotted...  ')
         for i in range(len(self.vertex_ids)):
+            #print("id %d has coords (%0.4f, %0.4f)" % (self.vertex_ids[i], self.vertex_coords[i, 0], self.vertex_coords[i, 1]))
             plt.annotate(
                 str(self.vertex_ids[i]),
                 xy = (self.vertex_coords[i, 0], self.vertex_coords[i, 1]),
             )
+        plt.ylim(-0.8, 0.8)
+        plt.xlim(-0.8, 0.8)
+        plt.axhline(y=0, color='k')
+        plt.axvline(x=0, color='k')
+
         plt.show()
 
 def main():

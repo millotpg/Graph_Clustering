@@ -2,10 +2,7 @@ from numpy import matlib as mat
 import time
 
 # For testing - saves time to type in
-FB_DATA = 'graph_data/fb_amherst.edges'
-ENZYME_DATA = 'graph_data/enzymes_g10.edges'
 TEST_DATA = 'graph_data/test_2.edges'
-LATTICE_DATA = 'graph_data/lattice.edges'
 
 class ReadEdges():
     """
@@ -90,7 +87,7 @@ class ReadEdges():
                 self.lap_mat[row, col] = self.deg_mat[row, col] - self.adj_mat[row, col]
                 self.lap_mat[col, row] = self.deg_mat[row, col] - self.adj_mat[row, col]
         return self.lap_mat
-    
+
     def generate_matricies(self):
         """
         Generates the adjacency, degree, and laplacian matrix in one method for timing

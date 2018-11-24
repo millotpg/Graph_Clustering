@@ -52,17 +52,21 @@ class Eigen():
         if n > self.mat_size[0]:
             raise ValueError("n cannot be greater than number of eigen values")
         top_n_vectors = np.matlib.zeros((n, self.mat_size[0]))
-        index_queue = PQ()
-        for i in range(self.eigen_values.shape[0]):
-            index_queue.put((self.eigen_values[i], i))
-        index_queue.queue.sort()
-        #index_queue.queue.reverse()
-        index_queue.get()
-        for i in range(n):
-            cur_top_value = index_queue.get()
-            cur_top_vector = np.array(self.eigen_vectors[cur_top_value[1], :])
-            top_n_vectors[i, :] = cur_top_vector
+        transposed_mat = self.eigen_vectors.transpose()
+        for i in range(0, n):
+            top_n_vectors[i, :] = transposed_mat[i+1, :]
         return top_n_vectors
+        # index_queue = PQ()
+        # for i in range(self.eigen_values.shape[0]):
+        #     index_queue.put((self.eigen_values[i], i))
+        # index_queue.queue.sort()
+        # #index_queue.queue.reverse()
+        # index_queue.get()
+        # for i in range(n):
+        #     cur_top_value = index_queue.get()
+        #     cur_top_vector = np.array(self.eigen_vectors[cur_top_value[1], :])
+        #     top_n_vectors[i, :] = cur_top_vector
+        # return top_n_vectors
 
 def main():
     test_mat = np.array([[6, -1],[2,3]]) # Has eigen values 5 and 4

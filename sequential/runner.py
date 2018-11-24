@@ -12,13 +12,24 @@ class RunClustering():
         
         # Generate the laplacian Matrix
         x.generate_matricies()
-        
+
         # Calculate it's eigenvectors
         eig = Eigen(x.lap_mat)
 
-        # # Get the top 2 eigen vectors (based on eigen values)
+        # # # Get the top 2 eigen vectors (based on eigen values)
         lap_coords = eig.get_top_eigenvectors(2)
-        
-        # # Plot the coordinates
+
+        # # # Plot the coordinates
         grph = GraphPlotter(x.node_ids, lap_coords.transpose(), None)
-        grph.plot_2d()
+        grph.plot_2d() 
+
+def print_matrix(mat_str, mat):
+    """
+    Prints a numpy matrix for debugging
+    """
+    print(mat_str)
+    (rows, cols) = mat.shape
+    for i in range(rows):
+        for k in range(cols):
+            print(int(mat[i, k]), end=' ')
+        print()
