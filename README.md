@@ -36,18 +36,29 @@ Class file that will cluster an edge file. Takes the following configuration par
  - Desired dimension - dimension to map the graph into
  - Plot desired - if the dimension is 2 or 3, use matplot lib to generate a plot of the clustered graph and the non clustered graph
 
-# graph_cluster.py
+# graph_cluster usage
 Executable file that will take command line input and execute runner.py
 
 Usage:
 
-    -f           edgefile
-    -c           clustering method
-    --min-sil    minimum accepted silhouette (defaults to accept first)
-    -d           dimension to plot the graph into
-    -p           if the dimension is 2 or 3, a plot will be generated. otherwise ignored
+    edgefile              edge file representation of the input graph
+    -h                    display help information
+    -c (--clusters)       number of clusters (defaults to 2) 
+    -d                    dimension to map the graph into (defaults to 2)
+    -g (--generate-plot)  will generate a plot (defaults to true)
+                          (optional, defaults to false and only works if -d = 2 or 3)
+    -p (--parallel)       run graph_clustering in parallel (optional, defaults to true)
+    -s (--sequential)     run graph_clustering sequentially (optional, defaults to true)
+    -t (--time)           display time information on clustering (optional, defaults to true)
 
-    `graph_cluster -f <edgefile> -c <clustering method> --min-sil <min-silhouette> -d <spectral dimesion> -p`
 
 ## Examples
-TODO
+Generate a graph clustering using the lattice data. Create two clusters in two dimensions sequentially and time the program:
+
+`./graph_clustering graph_data/lattice.edges -c 2 -d 2 -s -g -t`
+
+
+## Future Expansion
+Add an option for a minimum accepted silhouette value
+    --min-sil    minimum accepted silhouette (defaults to accept first)
+

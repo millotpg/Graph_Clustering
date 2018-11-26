@@ -1,17 +1,36 @@
 #!/usr/bin/env python3
-from sequential.runner import RunClustering
+import argparse
+from sequential.runner import RunClustering as SequentialRunner
 
 # import test data
-FB_DATA = 'graph_data/fb_amherst.edges'
-ENZYME_DATA = 'graph_data/enzymes_g10.edges'
-TEST1_DATA = 'graph_data/test_1.edges'
-TEST2_DATA = 'graph_data/test_2.edges'
-TEST3_DATA = 'graph_data/test_3.edges'
-LATTICE_DATA = 'graph_data/lattice.edges'
+FB_DATA = 'graph_data/fb_amherst.edges'      # Largest edge file
+ENZYME_DATA = 'graph_data/enzymes_g10.edges' # Interesting to view on plot?
+TEST1_DATA = 'graph_data/test_1.edges'       # For testing edge case
+TEST2_DATA = 'graph_data/test_2.edges'       # For testing edge case
+TEST3_DATA = 'graph_data/test_3.edges'       # For testing edge case
+LATTICE_DATA = 'graph_data/lattice.edges'    # Good to plot, examplifies power of spectral embedding
 
 def main():
-    runner = RunClustering(FB_DATA)
-    runner.start()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('edge_file', help='Input edge file for spectral analysis')
+    parser.add_argument('-c', '--clusters', help='Number of desired clusters for graph', action='store', dest='clusters', type=int, default=2)
+    parser.add_argument('-d', '--dimension', help='Dimensions used in analysis', action='store', dest='dimension', type=int, default=2)
+    parser.add_argument('-g', '--generate-plot', help='Plot the clustering', action='store_true', dest='generate_plot', default=False)
+    parser.add_argument('-p', '--parallel', help='Will run the clustering in parallel', action='store_true', dest='parallel', default=False)
+    parser.add_argument('-s', '--sequential', help='Will run the clustering in sequential', action='store_true', dest='sequential', default=False)
+    parser.add_argument('-t', '--time', help='display time information on clustering', action='store_true', dest='time', default=True)
+    args = parser.parse_args()
+
+    if not (args.parallel or args.sequential):
+        print('Error: Must select either -p or -s to run clustering in sequential or parallel!')
+        exit(0)
+
+    seq_runner = SequentialRunner(args.edge_file, args.clusters, args.dimension, args.generate_plot)
+    
+    if(args.time):
+        seq_runner.start_timed()
+    else:
+        seq_runner.start()
 
 if __name__ == "__main__":
     main()
