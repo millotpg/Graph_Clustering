@@ -36,14 +36,14 @@ class RunClustering():
         # Cluster the data points
         start = timer()
         cluster = Cluster(lap_coords, edges.node_ids, self.no_of_clusters)
-        cluster.cluster_data()
+        (data_frame, centroids, labels) = cluster.cluster_data()
         end = timer()
         print('Time to cluster data: %0.4fs' % (end-start))
 
         # Plot the coordinates
         if(self.plot_desired):
             grph = GraphPlotter(edges.node_ids, lap_coords, None)
-            grph.plot_2d()
+            grph.plot_2d_unclustered()
     
     def start(self):
         # Read the edges
@@ -56,14 +56,16 @@ class RunClustering():
         eig = Eigen(edges.lap_mat)
 
         # Get the top 2 eigen vectors (based on eigen values)
-        lap_coords = eig.get_top_eigenvectors(2)
+        lap_coords = eig.get_top_eigenvectors(self.dimension).transpose()
 
         cluster = Cluster(lap_coords, edges.node_ids, self.no_of_clusters)
+        (data_frame, centroids, labels) = cluster.cluster_data()
 
         # Plot the coordinates
         if(self.plot_desired):
             grph = GraphPlotter(edges.node_ids, lap_coords.transpose(), None)
-            grph.plot_2d()
+            #grph.plot_2d_unclustered()
+            grph.plot_2d_clustered(labels, centroids, data_frame)
 
 def print_matrix(mat_str, mat):
     """

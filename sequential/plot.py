@@ -16,7 +16,7 @@ class GraphPlotter():
         self.vertex_coords = vertex_coords
         self.edges = edges
     
-    def plot_2d(self):
+    def plot_2d_unclustered(self):
         plt.plot(self.vertex_coords[:, 0], self.vertex_coords[:, 1], 'ro', [])
         #print('\nGraph points being plotted...  ')
         for i in range(len(self.vertex_ids)):
@@ -29,7 +29,24 @@ class GraphPlotter():
         plt.xlim(-0.6, 0.6)
         plt.axhline(y=0, color='k')
         plt.axvline(x=0, color='k')
+        plt.show()
 
+    def plot_2d_clustered(self, labels, centroids, data_frame):
+        colmap = {1: 'r', 2: 'g', 3: 'b'}
+        fig = plt.figure()
+        colors = list(map(lambda x: colmap[x+1], labels))
+        plt.scatter(data_frame['d1'], data_frame['d2'], color=colors, alpha=0.5)
+        for i, centroid in enumerate(centroids):
+            plt.scatter(*centroid, color=colmap[i+1])
+        for i in range(len(self.vertex_ids)):
+            plt.annotate(
+                str(self.vertex_ids[i]),
+                xy = (self.vertex_coords[0, i], self.vertex_coords[1, i]),
+            )
+        plt.axhline(y=0, color='k')
+        plt.axvline(x=0, color='k')
+        plt.ylim(-0.6, 0.6)
+        plt.xlim(-0.6, 0.6)
         plt.show()
 
 def main():

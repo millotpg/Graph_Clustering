@@ -18,7 +18,7 @@ def main():
     parser.add_argument('-g', '--generate-plot', help='Plot the clustering', action='store_true', dest='generate_plot', default=False)
     parser.add_argument('-p', '--parallel', help='Will run the clustering in parallel', action='store_true', dest='parallel', default=False)
     parser.add_argument('-s', '--sequential', help='Will run the clustering in sequential', action='store_true', dest='sequential', default=False)
-    parser.add_argument('-t', '--time', help='display time information on clustering', action='store_true', dest='time', default=True)
+    parser.add_argument('-t', '--time', help='display time information on clustering', action='store_true', dest='time', default=False)
     args = parser.parse_args()
 
     if not (args.parallel or args.sequential):
