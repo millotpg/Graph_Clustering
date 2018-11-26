@@ -36,6 +36,9 @@ Class file that will cluster an edge file. Takes the following configuration par
  - Desired dimension - dimension to map the graph into
  - Plot desired - if the dimension is 2 or 3, use matplot lib to generate a plot of the clustered graph and the non clustered graph
 
+ ## Clustering
+ Currently, up to 5 clusters can be made and plotted. 
+
 # graph_cluster usage
 Executable file that will take command line input and execute runner.py
 

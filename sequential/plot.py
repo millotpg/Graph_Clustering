@@ -17,10 +17,11 @@ class GraphPlotter():
         self.edges = edges
     
     def plot_2d_unclustered(self):
+        """
+        Plots the coordinates in a 2 dimensional space. No clusters
+        """
         plt.plot(self.vertex_coords[:, 0], self.vertex_coords[:, 1], 'ro', [])
-        #print('\nGraph points being plotted...  ')
         for i in range(len(self.vertex_ids)):
-            #print("id %d has coords (%0.4f, %0.4f)" % (self.vertex_ids[i], self.vertex_coords[i, 0], self.vertex_coords[i, 1]))
             plt.annotate(
                 str(self.vertex_ids[i]),
                 xy = (self.vertex_coords[i, 0], self.vertex_coords[i, 1]),
@@ -29,10 +30,14 @@ class GraphPlotter():
         plt.xlim(-0.6, 0.6)
         plt.axhline(y=0, color='k')
         plt.axvline(x=0, color='k')
+        plt.title('Input Graph: Unclustered')
         plt.show()
 
     def plot_2d_clustered(self, labels, centroids, data_frame):
-        colmap = {1: 'r', 2: 'g', 3: 'b'}
+        """
+        Plots the coordinates in a 2 dimensional space with colors representing the colors
+        """
+        colmap = {1: 'r', 2: 'g', 3: 'b', 4: 'y', 5: 'k'}
         fig = plt.figure()
         colors = list(map(lambda x: colmap[x+1], labels))
         plt.scatter(data_frame['d1'], data_frame['d2'], color=colors, alpha=0.5)
@@ -41,12 +46,13 @@ class GraphPlotter():
         for i in range(len(self.vertex_ids)):
             plt.annotate(
                 str(self.vertex_ids[i]),
-                xy = (self.vertex_coords[0, i], self.vertex_coords[1, i]),
+                xy = (self.vertex_coords[i, 0], self.vertex_coords[i, 1]),
             )
-        plt.axhline(y=0, color='k')
-        plt.axvline(x=0, color='k')
         plt.ylim(-0.6, 0.6)
         plt.xlim(-0.6, 0.6)
+        plt.axhline(y=0, color='k')
+        plt.axvline(x=0, color='k')
+        plt.title('Input Graph: Clustered')
         plt.show()
 
 def main():

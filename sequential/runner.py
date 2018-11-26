@@ -16,19 +16,22 @@ class RunClustering():
         start = timer()
         edges = ReadEdges(self.edge_file)
         end = timer()
-        print('Time to read the edge file: %0.4fs' % (end-start))
+        t1 = end - start
+        print('Time to read the edge file: %0.4fs' % t1)
         
         # Generate the laplacian Matrix
         start = timer()
         edges.generate_matricies()
         end = timer()
-        print('Time to generate the matrices: %0.4fs' % (end-start))
+        t2 = end - start
+        print('Time to generate the matrices: %0.4fs' % t2)
 
         # Calculate it's eigenvectors
         start = timer()
         eig = Eigen(edges.lap_mat)
         end = timer()
-        print('Time to generate eigenvalues and eigenvectors: %0.4fs' % (end-start))
+        t3 = end - start
+        print('Time to generate eigenvalues and eigenvectors: %0.4fs' % t3)
 
         # Get the top 2 eigen vectors (based on eigen values)
         lap_coords = eig.get_top_eigenvectors(self.dimension).transpose()
@@ -38,12 +41,18 @@ class RunClustering():
         cluster = Cluster(lap_coords, edges.node_ids, self.no_of_clusters)
         (data_frame, centroids, labels) = cluster.cluster_data()
         end = timer()
-        print('Time to cluster data: %0.4fs' % (end-start))
+        t4 = end - start
+        print('Time to cluster data: %0.4fs' % t4)
+
+        # Display total time
+        total = t1 + t2 + t3 + t4
+        print('Total time to compute clusters in graph: %0.04fs' % total)
 
         # Plot the coordinates
         if(self.plot_desired):
             grph = GraphPlotter(edges.node_ids, lap_coords, None)
             grph.plot_2d_unclustered()
+            grph.plot_2d_clustered(labels, centroids, data_frame)
     
     def start(self):
         # Read the edges
@@ -63,8 +72,8 @@ class RunClustering():
 
         # Plot the coordinates
         if(self.plot_desired):
-            grph = GraphPlotter(edges.node_ids, lap_coords.transpose(), None)
-            #grph.plot_2d_unclustered()
+            grph = GraphPlotter(edges.node_ids, lap_coords, None)
+            grph.plot_2d_unclustered()
             grph.plot_2d_clustered(labels, centroids, data_frame)
 
 def print_matrix(mat_str, mat):
