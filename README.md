@@ -1,4 +1,4 @@
-# Graph Clustering - A tool for visualizing and clustering graphes
+# Graph Clustering - A tool for visualizing and clustering graphs
 ## Installation
 This tool was written for python3. After cloning the repository, run: 
 
