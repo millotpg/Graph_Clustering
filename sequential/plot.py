@@ -25,8 +25,8 @@ class GraphPlotter():
                 str(self.vertex_ids[i]),
                 xy = (self.vertex_coords[i, 0], self.vertex_coords[i, 1]),
             )
-        plt.ylim(-0.8, 0.8)
-        plt.xlim(-0.8, 0.8)
+        plt.ylim(-0.6, 0.6)
+        plt.xlim(-0.6, 0.6)
         plt.axhline(y=0, color='k')
         plt.axvline(x=0, color='k')
 

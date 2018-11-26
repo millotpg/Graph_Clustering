@@ -60,5 +60,6 @@ Generate a graph clustering using the lattice data. Create two clusters in two d
 
 ## Future Expansion
 Add an option for a minimum accepted silhouette value
+
     --min-sil    minimum accepted silhouette (defaults to accept first)
 
