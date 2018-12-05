@@ -44,15 +44,14 @@ class RunClustering():
         t4 = end - start
         print('Time to cluster data: %0.4fs' % t4)
 
-        # Display total time
-        total = t1 + t2 + t3 + t4
-        print('Total time to compute clusters in graph: %0.04fs' % total)
-
         # Plot the coordinates
         if(self.plot_desired):
             grph = GraphPlotter(edges.node_ids, lap_coords, None)
             grph.plot_2d_unclustered()
             grph.plot_2d_clustered(labels, centroids, data_frame)
+
+        data_frame['labels'] = labels
+        data_frame.to_csv(self.edge_file+".clustered.csv")
     
     def start(self):
         # Read the edges
@@ -75,6 +74,9 @@ class RunClustering():
             grph = GraphPlotter(edges.node_ids, lap_coords, None)
             grph.plot_2d_unclustered()
             grph.plot_2d_clustered(labels, centroids, data_frame)
+        
+        data_frame['labels'] = labels
+        data_frame.to_csv(self.edge_file+".clustered.csv")
 
 def print_matrix(mat_str, mat):
     """

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import argparse
 from sequential.runner import RunClustering as SequentialRunner
+from parallel.runner import RunClustering as ParallelRunner
+from timeit import default_timer as timer
 
 # import test data
 FB_DATA = 'graph_data/fb_amherst.edges'      # Largest edge file
@@ -24,13 +26,19 @@ def main():
     if not (args.parallel or args.sequential):
         print('Error: Must select either -p or -s to run clustering in sequential or parallel!')
         exit(0)
-
-    seq_runner = SequentialRunner(args.edge_file, args.clusters, args.dimension, args.generate_plot)
+    elif args.sequential:
+        runner = SequentialRunner(args.edge_file, args.clusters, args.dimension, args.generate_plot)
+    elif args.parallel:
+        runner = ParallelRunner(args.edge_file, args.clusters, args.dimension, args.generate_plot)
     
     if(args.time):
-        seq_runner.start_timed()
+        start = timer()
+        runner.start_timed()
+        end = timer()
+        total_time = end - start
+        print('Total Time: %0.4fs' % total_time)
     else:
-        seq_runner.start()
+        runner.start()
 
 if __name__ == "__main__":
     main()
