@@ -2,6 +2,7 @@
 import argparse
 from sequential.runner import RunClustering as SequentialRunner
 from parallel.runner import RunClustering as ParallelRunner
+from timeit import default_timer as timer
 
 # import test data
 FB_DATA = 'graph_data/fb_amherst.edges'      # Largest edge file
@@ -31,7 +32,11 @@ def main():
         runner = ParallelRunner(args.edge_file, args.clusters, args.dimension, args.generate_plot)
     
     if(args.time):
+        start = timer()
         runner.start_timed()
+        end = timer()
+        total_time = end - start
+        print('Total Time: %0.4fs' % total_time)
     else:
         runner.start()
 
