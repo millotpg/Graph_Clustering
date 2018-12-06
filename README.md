@@ -17,16 +17,13 @@ Contains all the sequential methods to read an edge file, generate the graph mat
  - *read_edges.py* - read an edge file and generates the graph matricies
  - *eigen.py* - takes a matrix as input and generates the eigen values and eigen vectors
  - *cluster.py* - takes vertex ids and their associated *n* points representing that vertex in *n* dimensional space and clusters them
- - *silhouette.py* - calculates the efficiency of the clustering
  - *plot.py* - if the graph is mapped to the 2nd or 3rd dimension, plot the graph using matplotlib and show the clusters (in different colors)
  - *runner.py* - Takes parameters and runs the scripts 
 
 ## Parallel
-Same as the sequential package except the following scripts execute in parallel for a performance increase
- - *read_edges.py*
- - *eigen.py*
- - *cluster.py*
- - *silhouette.py*
+Contains runner.py which will obtain the coordinates for the graph nodes via cuda executable. 
+ - cuda_source - file that contains the source for the cuda executable
+ - *runner.py* - takes parameters and executes the clustering
 
 ## Runner.py (in /sequential and /parallel)
 Class file that will cluster an edge file. Takes the following configuration parameters
